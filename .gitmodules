@@ -1,0 +1,27 @@
+[submodule "geochat-auth-service"]
+	path = geochat-auth-service
+	url = git@github.com:GlebPoroshin/geochat-auth-service.git
+[submodule "geochat-gateway-service"]
+	path = geochat-gateway-service
+	url = git@github.com:GlebPoroshin/geochat-gateway-service.git
+[submodule "geochat-user-service"]
+	path = geochat-user-service
+	url = git@github.com:GlebPoroshin/geochat-user-service.git
+[submodule "geochat-chat-service"]
+	path = geochat-chat-service
+	url = git@github.com:GlebPoroshin/geochat-chat-service.git
+[submodule "geochat-notification-service"]
+	path = geochat-notification-service
+	url = git@github.com:GlebPoroshin/geochat-notification-service.git
+[submodule "geochat-event-service"]
+	path = geochat-event-service
+	url = git@github.com:GlebPoroshin/geochat-chat-service.git
+[submodule "geochat-presence-service"]
+	path = geochat-presence-service
+	url = git@github.com:GlebPoroshin/geochat-presence-service.git
+[submodule "geochat-shared"]
+	path = geochat-shared
+	url = git@github.com:GlebPoroshin/geochat-shared.git
+[submodule "geochat-deployment"]
+	path = geochat-deployment
+	url = git@github.com:GlebPoroshin/geochat-deployment.git
