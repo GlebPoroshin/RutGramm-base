@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/GlebPoroshin/geochat/proto/auth";
+
+service AuthService {
+  // Register a new user
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  
+  // Verify registration code
+  rpc VerifyRegistration(VerifyRegistrationRequest) returns (VerifyRegistrationResponse) {}
+  
+  // Resend verification code
+  rpc ResendVerificationCode(ResendVerificationCodeRequest) returns (ResendVerificationCodeResponse) {}
+  
+  // Login user
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  
+  // Refresh token
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {}
+  
+  // Initiate password reset
+  rpc InitiatePasswordReset(InitiatePasswordResetRequest) returns (InitiatePasswordResetResponse) {}
+  
+  // Verify password reset code
+  rpc VerifyPasswordResetCode(VerifyPasswordResetCodeRequest) returns (VerifyPasswordResetCodeResponse) {}
+  
+  // Reset password
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {}
+}
+
+// Register request
+message RegisterRequest {
+  string login = 1;
+  string email = 2;
+  string password = 3;
+}
+
+// Register response
+message RegisterResponse {
+  string user_id = 1;
+  string message = 2;
+}
+
+// Verification request
+message VerifyRegistrationRequest {
+  string user_id = 1;
+  string code = 2;
+}
+
+// Verification response
+message VerifyRegistrationResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Resend verification code request
+message ResendVerificationCodeRequest {
+  string user_id = 1;
+}
+
+// Resend verification code response
+message ResendVerificationCodeResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Login request
+message LoginRequest {
+  string login_or_email = 1;
+  string password = 2;
+}
+
+// Login response
+message LoginResponse {
+  string user_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+}
+
+// Refresh token request
+message RefreshTokenRequest {
+  string user_id = 1;
+  string refresh_token = 2;
+}
+
+// Refresh token response
+message RefreshTokenResponse {
+  string user_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+}
+
+// Initiate password reset request
+message InitiatePasswordResetRequest {
+  string email = 1;
+}
+
+// Initiate password reset response
+message InitiatePasswordResetResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Verify password reset code request
+message VerifyPasswordResetCodeRequest {
+  string email = 1;
+  string code = 2;
+}
+
+// Verify password reset code response
+message VerifyPasswordResetCodeResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Reset password request
+message ResetPasswordRequest {
+  string email = 1;
+  string new_password = 2;
+}
+
+// Reset password response
+message ResetPasswordResponse {
+  bool success = 1;
+  string message = 2;
+} 

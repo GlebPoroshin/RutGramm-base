@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080'; // Adjust this to point to your gateway service
+// Determine API URL based on the current protocol
+const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+const host = 'localhost:8080'; // Adjust this to point to your gateway service
+const API_URL = `${protocol}//${host}`;
 
 const api = axios.create({
   baseURL: API_URL,

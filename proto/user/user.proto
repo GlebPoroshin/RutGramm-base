@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/GlebPoroshin/geochat/proto/user";
+
+service UserService {
+  // Get user profile
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse) {}
+  
+  // Update user profile
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse) {}
+  
+  // Create user profile (internal method, called from auth service)
+  rpc CreateUserProfile(CreateUserProfileRequest) returns (CreateUserProfileResponse) {}
+  
+  // Get user by ID
+  rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse) {}
+  
+  // Search users
+  rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse) {}
+}
+
+// User profile data
+message UserProfile {
+  string id = 1;
+  string login = 2;
+  string display_name = 3;
+  string bio = 4;
+  string avatar_url = 5;
+  string location = 6;
+  float latitude = 7;
+  float longitude = 8;
+  bool is_online = 9;
+  int64 last_seen = 10;
+  repeated string interests = 11;
+  int64 created_at = 12;
+  int64 updated_at = 13;
+}
+
+// Get profile request
+message GetProfileRequest {
+  string user_id = 1;
+}
+
+// Get profile response
+message GetProfileResponse {
+  UserProfile profile = 1;
+}
+
+// Update profile request
+message UpdateProfileRequest {
+  string user_id = 1;
+  optional string display_name = 2;
+  optional string bio = 3;
+  optional string avatar_url = 4;
+  optional string location = 5;
+  optional float latitude = 6;
+  optional float longitude = 7;
+  repeated string interests = 8;
+}
+
+// Update profile response
+message UpdateProfileResponse {
+  UserProfile profile = 1;
+}
+
+// Create user profile request (internal)
+message CreateUserProfileRequest {
+  string user_id = 1;
+  string login = 2;
+  string email = 3;
+}
+
+// Create user profile response
+message CreateUserProfileResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Get user by ID request
+message GetUserByIdRequest {
+  string user_id = 1;
+}
+
+// Get user by ID response
+message GetUserByIdResponse {
+  UserProfile user = 1;
+}
+
+// Search users request
+message SearchUsersRequest {
+  string query = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  optional float latitude = 4;
+  optional float longitude = 5;
+  optional float radius = 6;
+}
+
+// Search users response
+message SearchUsersResponse {
+  repeated UserProfile users = 1;
+  int32 total = 2;
+} 

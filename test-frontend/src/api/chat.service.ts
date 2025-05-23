@@ -146,7 +146,11 @@ export class WebSocketService {
       return;
     }
 
-    this.socket = new WebSocket(`ws://localhost:8080/ws/?token=${token}`);
+    // Use the same protocol (ws or wss) as the current page
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = 'localhost:8080'; // Use your API hostname
+    
+    this.socket = new WebSocket(`${protocol}//${host}/ws/?token=${token}`);
 
     this.socket.onopen = () => {
       this.notifyStatus('connected');

@@ -35,8 +35,13 @@ function App() {
     }
 
     try {
+      // Get the protocol and host
+      const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = 'localhost:8080';
+      
       // Загрузить сообщения из чата
-      const response = await axios.get(`http://localhost:8080/chats/${chatId}/messages`, {
+      const response = await axios.get(`${protocol}//${host}/chats/${chatId}/messages`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -47,7 +52,7 @@ function App() {
       }
       
       // Подключиться через WebSocket
-      const ws = new WebSocket(`ws://localhost:8080/ws/?token=${token}`);
+      const ws = new WebSocket(`${wsProtocol}//${host}/ws/?token=${token}`);
       
       ws.onopen = () => {
         setSocketStatus('Подключено');
@@ -89,7 +94,10 @@ function App() {
     if (!newMessage.trim() || !isConnected) return;
     
     try {
-      await axios.post(`http://localhost:8080/chats/${chatId}/messages`, 
+      const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+      const host = 'localhost:8080';
+      
+      await axios.post(`${protocol}//${host}/chats/${chatId}/messages`, 
         { content: newMessage },
         {
           headers: {

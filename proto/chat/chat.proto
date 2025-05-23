@@ -1,0 +1,212 @@
+syntax = "proto3";
+
+package chat;
+
+option go_package = "github.com/GlebPoroshin/geochat/proto/chat";
+
+service ChatService {
+  // Create a new chat
+  rpc CreateChat(CreateChatRequest) returns (CreateChatResponse) {}
+  
+  // Get chat by ID
+  rpc GetChat(GetChatRequest) returns (GetChatResponse) {}
+  
+  // Update chat
+  rpc UpdateChat(UpdateChatRequest) returns (UpdateChatResponse) {}
+  
+  // Delete chat
+  rpc DeleteChat(DeleteChatRequest) returns (DeleteChatResponse) {}
+  
+  // Get user chats
+  rpc GetUserChats(GetUserChatsRequest) returns (GetUserChatsResponse) {}
+  
+  // Add user to chat
+  rpc AddUserToChat(AddUserToChatRequest) returns (AddUserToChatResponse) {}
+  
+  // Remove user from chat
+  rpc RemoveUserFromChat(RemoveUserFromChatRequest) returns (RemoveUserFromChatResponse) {}
+  
+  // Send message
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
+  
+  // Get messages
+  rpc GetMessages(GetMessagesRequest) returns (GetMessagesResponse) {}
+  
+  // Update message
+  rpc UpdateMessage(UpdateMessageRequest) returns (UpdateMessageResponse) {}
+  
+  // Delete message
+  rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse) {}
+}
+
+// Chat data
+message Chat {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string type = 4; // "private", "group", "geo"
+  string avatar_url = 5;
+  float latitude = 6;
+  float longitude = 7;
+  float radius = 8;
+  string created_by = 9;
+  repeated string members = 10;
+  int64 created_at = 11;
+  int64 updated_at = 12;
+  int64 last_message_at = 13;
+  Message last_message = 14;
+}
+
+// Message data
+message Message {
+  string id = 1;
+  string chat_id = 2;
+  string sender_id = 3;
+  string content = 4;
+  repeated string attachments = 5;
+  bool is_edited = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+
+// Create chat request
+message CreateChatRequest {
+  string name = 1;
+  string description = 2;
+  string type = 3; // "private", "group", "geo"
+  string avatar_url = 4;
+  float latitude = 5;
+  float longitude = 6;
+  float radius = 7;
+  string created_by = 8;
+  repeated string members = 9;
+}
+
+// Create chat response
+message CreateChatResponse {
+  Chat chat = 1;
+}
+
+// Get chat request
+message GetChatRequest {
+  string chat_id = 1;
+}
+
+// Get chat response
+message GetChatResponse {
+  Chat chat = 1;
+}
+
+// Update chat request
+message UpdateChatRequest {
+  string chat_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  optional string avatar_url = 4;
+  optional float latitude = 5;
+  optional float longitude = 6;
+  optional float radius = 7;
+}
+
+// Update chat response
+message UpdateChatResponse {
+  Chat chat = 1;
+}
+
+// Delete chat request
+message DeleteChatRequest {
+  string chat_id = 1;
+}
+
+// Delete chat response
+message DeleteChatResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Get user chats request
+message GetUserChatsRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+// Get user chats response
+message GetUserChatsResponse {
+  repeated Chat chats = 1;
+  int32 total = 2;
+}
+
+// Add user to chat request
+message AddUserToChatRequest {
+  string chat_id = 1;
+  string user_id = 2;
+}
+
+// Add user to chat response
+message AddUserToChatResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Remove user from chat request
+message RemoveUserFromChatRequest {
+  string chat_id = 1;
+  string user_id = 2;
+}
+
+// Remove user from chat response
+message RemoveUserFromChatResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Send message request
+message SendMessageRequest {
+  string chat_id = 1;
+  string sender_id = 2;
+  string content = 3;
+  repeated string attachments = 4;
+}
+
+// Send message response
+message SendMessageResponse {
+  Message message = 1;
+}
+
+// Get messages request
+message GetMessagesRequest {
+  string chat_id = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  optional int64 before_timestamp = 4;
+  optional int64 after_timestamp = 5;
+}
+
+// Get messages response
+message GetMessagesResponse {
+  repeated Message messages = 1;
+  int32 total = 2;
+}
+
+// Update message request
+message UpdateMessageRequest {
+  string message_id = 1;
+  string content = 2;
+}
+
+// Update message response
+message UpdateMessageResponse {
+  Message message = 1;
+}
+
+// Delete message request
+message DeleteMessageRequest {
+  string message_id = 1;
+}
+
+// Delete message response
+message DeleteMessageResponse {
+  bool success = 1;
+  string message = 2;
+} 
